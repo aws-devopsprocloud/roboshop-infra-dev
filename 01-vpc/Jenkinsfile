@@ -40,6 +40,9 @@ pipeline {
         }
     }
     post {
+        always {
+            echo 'This pipeline execution is completed'
+        }
         failure {
             echo 'The pipeline is FAILED'
         }
