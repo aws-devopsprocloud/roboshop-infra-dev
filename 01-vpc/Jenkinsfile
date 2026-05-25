@@ -1,0 +1,50 @@
+pipeline {
+    agent {
+        node {
+            label 'AGENT-1'
+        }
+    } 
+    options {
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        timeout(time: 1, unit: 'HOURS')
+    }
+    stages {
+        stage('Initializing') {
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform init -reconfigure
+                """
+            }
+        }
+        stage('Planning') {
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform plan
+                """
+            }
+        }
+        stage('Applying') {
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
+            }
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform apply -auto-approve
+                """
+            }
+        }
+    }
+    post {
+        failure {
+            echo 'The pipeline is FAILED'
+        }
+        success {
+            echo 'The pipeline is SUCESS'
+        }
+    }
+}
