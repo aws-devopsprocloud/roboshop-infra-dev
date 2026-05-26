@@ -1,0 +1,78 @@
+pipeline {
+    agent {
+        node {
+            label 'AGENT-1'
+        }
+    } 
+    options {
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        timeout(time: 1, unit: 'HOURS')
+    }
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
+    }
+    stages {
+        stage('Initializing') {
+            steps {
+                sh """
+                    cd 05-databases
+                    terraform init -reconfigure
+                """
+            }
+        }
+        stage('Planning') {
+            steps {
+                sh """
+                    cd 05-databases
+                    terraform plan
+                """
+            }
+        }
+        stage('Applying') {
+            when {
+                expression {
+                    "${params.ACTION}" == 'apply'
+                }
+            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
+            steps {
+                sh """
+                    cd 05-databases
+                    terraform apply -auto-approve
+                """
+            }
+        }
+        stage('Destroying') {
+            when {
+                expression {
+                    "${params.ACTION}" == 'destroy'
+                }
+            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
+            steps {
+                sh """
+                    cd 05-databases
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+    }
+    post {
+        always {
+            echo 'PIPELINE EXECUTION IS COMPLETED'
+        }
+        failure {
+            echo 'The pipeline is FAILED'
+        }
+        success {
+            echo 'The pipeline is SUCESS'
+        }
+    }
+}
