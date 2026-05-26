@@ -27,24 +27,3 @@ data "aws_ssm_parameter" "vpn_sg_id" {
   name = "/${var.project}/${var.environment}/vpn_sg_id"
 }
 
-data "aws_vpc" "default" {
-  default = true 
-}
-
-data "aws_subnet" "default" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-
-  filter {
-    name   = "availability-zone"
-    values = ["us-east-1a"]
-  }
-
-  filter {
-    name   = "default-for-az"
-    values = ["true"]
-  }
-}
-
