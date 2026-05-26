@@ -32,7 +32,19 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet" "default" {
-  vpc_id            = data.aws_vpc.default.id
-  availability_zone = "us-east-1a"
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+
+  filter {
+    name   = "availability-zone"
+    values = ["us-east-1a"]
+  }
+
+  filter {
+    name   = "default-for-az"
+    values = ["true"]
+  }
 }
 
