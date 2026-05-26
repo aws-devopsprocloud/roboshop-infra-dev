@@ -4,7 +4,8 @@ module "vpn" {
   name = "${var.project}-${var.environment}-vpn"
 
   instance_type = "t3.micro"
-  subnet_id     = local.public_subnet_id
+  #subnet_id     = local.public_subnet_id
+  subnet_id     = local.default_vpc_public_subnet_id
   vpc_security_group_ids = [data.aws_ssm_parameter.vpn_sg_id.value]
   create_security_group = false
   user_data = file("vpn.sh")
