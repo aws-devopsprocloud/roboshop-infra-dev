@@ -16,7 +16,7 @@ pipeline {
         stage('Initializing') {
             steps {
                 sh """
-                    cd 01-vpc
+                    cd 02-sg
                     terraform init -reconfigure
                 """
             }
@@ -24,7 +24,7 @@ pipeline {
         stage('Planning') {
             steps {
                 sh """
-                    cd 01-vpc
+                    cd 02-sg
                     terraform plan
                 """
             }
