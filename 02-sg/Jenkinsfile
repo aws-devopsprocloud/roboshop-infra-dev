@@ -35,10 +35,10 @@ pipeline {
                     "${params.ACTION}" == 'apply'
                 }
             }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
             steps {
                 sh """
                     cd 02-sg
@@ -52,10 +52,10 @@ pipeline {
                     "${params.ACTION}" == 'destroy'
                 }
             }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
+            // input {
+            //     message "Should we continue?"
+            //     ok "Yes, we should."
+            // }
             steps {
                 sh """
                     cd 02-sg
