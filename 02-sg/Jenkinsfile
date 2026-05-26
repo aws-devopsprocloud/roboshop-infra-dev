@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 sh """
-                    cd 01-vpc
+                    cd 02-sg
                     terraform apply -auto-approve
                 """
             }
@@ -58,7 +58,7 @@ pipeline {
             }
             steps {
                 sh """
-                    cd 01-vpc
+                    cd 02-sg
                     terraform destroy -auto-approve
                 """
             }
