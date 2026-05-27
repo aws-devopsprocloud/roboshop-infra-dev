@@ -9,3 +9,7 @@ data "aws_ssm_parameter" "vpc_id" {
 data "http" "my_public_ip" {
   url = "https://ipv4.icanhazip.com"
 }
+
+data "aws_vpc" "default_vpc" {
+  default = true
+}

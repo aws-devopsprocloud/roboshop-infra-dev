@@ -4,7 +4,7 @@ module "sg" {
   count = length(var.sg_names)
   sg_name = replace(var.sg_names[count.index], "_", "-")
   sg_description = "Allow TLS inbound on ${var.project} in ${var.environment} in ${var.sg_names[count.index]}"
-  vpc_id = data.aws_ssm_parameter.vpc_id.value
+  vpc_id = var.sg_names[count.index] == "vpn" ? data.aws_vpc.default_vpc.id : data.aws_ssm_parameter.vpc_id.value
   project = var.project
   environment = var.environment
 }
