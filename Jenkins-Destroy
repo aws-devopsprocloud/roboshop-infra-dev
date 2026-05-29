@@ -13,12 +13,42 @@ pipeline {
     //     choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     // }
     stages {
-        
-        stage('VPN-Destroy') {
+        stage('VPC') {
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+        stage('SG') {
+            steps {
+                sh """
+                    cd 02-sg
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+        stage('SG-Rules') {
+            steps {
+                sh """
+                    cd 03-sg-rules
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+        stage('VPN') {
             steps {
                 sh """
                     cd 04-vpn
-                    terraform init -reconfigure
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+        stage('Databases') {
+            steps {
+                sh """
+                    cd 05-databases
                     terraform destroy -auto-approve
                 """
             }
