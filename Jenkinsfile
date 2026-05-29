@@ -13,66 +13,52 @@ pipeline {
         choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     }
     stages {
-        stage('Initializing') {
+        stage('VPC') {
             steps {
                 sh """
                     cd 01-vpc
                     terraform init -reconfigure
-                """
-            }
-        }
-        stage('Applying') {
-            steps {
-                sh """
                     cd 01-vpc
                     terraform apply -auto-approve
                 """
             }
         }
-        stage('Initializing') {
+        stage('SG') {
             steps {
                 sh """
                     cd 02-sg
                     terraform init -reconfigure
-                """
-            }
-        }
-        stage('Applying') {
-            steps {
-                sh """
                     cd 02-sg
                     terraform apply -auto-approve
                 """
             }
         }
-        stage('Initializing') {
+        stage('SG-Rules') {
             steps {
                 sh """
                     cd 03-sg-rules
                     terraform init -reconfigure
-                """
-            }
-        }
-        stage('Applying') {
-            steps {
-                sh """
                     cd 03-sg-rules
                     terraform apply -auto-approve
                 """
             }
         }
-        stage('Initializing') {
+        stage('VPN') {
             steps {
                 sh """
                     cd 04-vpn
                     terraform init -reconfigure
+                    cd 04-vpn
+                    terraform apply -auto-approve
                 """
             }
         }
-        stage('Applying') {
+        stage('Databases') {
             steps {
                 sh """
-                    cd 04-vpn
+                    cd 05-databases
+                    terraform init -reconfigure
+                    cd 05-databases
                     terraform apply -auto-approve
                 """
             }
