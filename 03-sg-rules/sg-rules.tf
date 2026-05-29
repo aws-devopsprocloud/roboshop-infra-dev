@@ -464,6 +464,17 @@
 #   source_security_group_id = data.aws_ssm_parameter.frontend_sg_id.value
 #   security_group_id = data.aws_ssm_parameter.backend_alb_sg_id.value
 # }
+# Bastion
+resource "aws_security_group_rule" "bastion_internet" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  #cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [local.my_ip]
+  # which SG you are creating this rule
+  security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
+}
 
 #---------------------------
 #           NEW            |
@@ -509,6 +520,17 @@ resource "aws_security_group_rule" "mongodb_vpn" {
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  # which SG you are creating this rule
+  security_group_id = data.aws_ssm_parameter.mongodb_sg_id.value
+}
+# NEW BASTION to MONGODB
+resource "aws_security_group_rule" "mongodb_bastion" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  #cidr_blocks       = ["0.0.0.0/0"]
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.mongodb_sg_id.value
 }
