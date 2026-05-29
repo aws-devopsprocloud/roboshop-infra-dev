@@ -16,11 +16,17 @@ module "mongodb" {
   }
 }
 
-resource "null_resource" "mongodb" {
-  # Changes to any instance of the cluster requires re-provisioning
-  triggers = {
-    instance_id = module.mongodb.id
-  }
+# resource "null_resource" "mongodb" {
+#   # Changes to any instance of the cluster requires re-provisioning
+#   triggers = {
+#     instance_id = module.mongodb.id
+#   }
+
+resource "terraform_data" "mongodb" {
+  triggers_replace = [
+    module.mongodb.id
+  ]
+
 
   # Bootstrap script can run on any instance of the cluster
   # So we just choose the first in this case
