@@ -9,16 +9,15 @@ pipeline {
         ansiColor('xterm')
         timeout(time: 1, unit: 'HOURS')
     }
-    parameters {
-        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
-    }
+    // parameters {
+    //     choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
+    // }
     stages {
         stage('VPC') {
             steps {
                 sh """
                     cd 01-vpc
                     terraform init -reconfigure
-                    cd 01-vpc
                     terraform apply -auto-approve
                 """
             }
@@ -28,7 +27,6 @@ pipeline {
                 sh """
                     cd 02-sg
                     terraform init -reconfigure
-                    cd 02-sg
                     terraform apply -auto-approve
                 """
             }
@@ -38,7 +36,6 @@ pipeline {
                 sh """
                     cd 03-sg-rules
                     terraform init -reconfigure
-                    cd 03-sg-rules
                     terraform apply -auto-approve
                 """
             }
@@ -48,7 +45,6 @@ pipeline {
                 sh """
                     cd 04-vpn
                     terraform init -reconfigure
-                    cd 04-vpn
                     terraform apply -auto-approve
                 """
             }
@@ -58,7 +54,6 @@ pipeline {
                 sh """
                     cd 05-databases
                     terraform init -reconfigure
-                    cd 05-databases
                     terraform apply -auto-approve
                 """
             }
