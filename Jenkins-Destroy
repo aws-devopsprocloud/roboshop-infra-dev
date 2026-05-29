@@ -12,29 +12,11 @@ pipeline {
     // parameters {
     //     choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     // }
-    stages {
-        stage('VPC') {
+    stages {    
+        stage('Databases') {
             steps {
                 sh """
-                    cd 01-vpc
-                    terraform init -reconfigure
-                    terraform destroy -auto-approve
-                """
-            }
-        }
-        stage('SG') {
-            steps {
-                sh """
-                    cd 02-sg
-                    terraform init -reconfigure
-                    terraform destroy -auto-approve
-                """
-            }
-        }
-        stage('SG-Rules') {
-            steps {
-                sh """
-                    cd 03-sg-rules
+                    cd 05-databases
                     terraform init -reconfigure
                     terraform destroy -auto-approve
                 """
@@ -49,16 +31,33 @@ pipeline {
                 """
             }
         }
-        stage('Databases') {
+        stage('SG-Rules') {
             steps {
                 sh """
-                    cd 05-databases
+                    cd 03-sg-rules
                     terraform init -reconfigure
                     terraform destroy -auto-approve
                 """
             }
         }
-        
+        stage('SG') {
+            steps {
+                sh """
+                    cd 02-sg
+                    terraform init -reconfigure
+                    terraform destroy -auto-approve
+                """
+            }
+        }
+        stage('VPC') {
+            steps {
+                sh """
+                    cd 01-vpc
+                    terraform init -reconfigure
+                    terraform destroy -auto-approve
+                """
+            }
+        }     
     }
     post {
         always {
