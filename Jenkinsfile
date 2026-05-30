@@ -76,6 +76,24 @@ pipeline {
                 """
             }
         }
+        stage('ACM') {
+            steps {
+                sh """
+                    cd 08-acm
+                    terraform init -reconfigure
+                    terraform apply -auto-approve
+                """
+            }
+        }
+        stage('Frontend-ALB') {
+            steps {
+                sh """
+                    cd 09-frontend-alb
+                    terraform init -reconfigure
+                    terraform apply -auto-approve
+                """
+            }
+        }
         
     }
     post {
