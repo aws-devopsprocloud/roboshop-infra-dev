@@ -40,10 +40,10 @@ pipeline {
                 """
             }
         }
-        stage('VPN') {
+        stage('Bastion') {
             steps {
                 sh """
-                    cd 04-vpn
+                    cd 04-bastion
                     terraform init -reconfigure
                     terraform apply -auto-approve
                 """
@@ -53,6 +53,24 @@ pipeline {
             steps {
                 sh """
                     cd 05-databases
+                    terraform init -reconfigure
+                    terraform apply -auto-approve
+                """
+            }
+        }
+        stage('Backend-ALB') {
+            steps {
+                sh """
+                    cd 06-backend-alb
+                    terraform init -reconfigure
+                    terraform apply -auto-approve
+                """
+            }
+        }
+        stage('VPN') {
+            steps {
+                sh """
+                    cd 12-vpn
                     terraform init -reconfigure
                     terraform apply -auto-approve
                 """

@@ -513,16 +513,16 @@ resource "aws_security_group_rule" "backend_alb_vpn" {
   security_group_id = data.aws_ssm_parameter.backend_alb_sg_id.value
 }
 
-resource "aws_security_group_rule" "mongodb_vpn" {
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
-  # which SG you are creating this rule
-  security_group_id = data.aws_ssm_parameter.mongodb_sg_id.value
-}
+# resource "aws_security_group_rule" "mongodb_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.mongodb_sg_id.value
+# }
 # NEW BASTION to MONGODB
 resource "aws_security_group_rule" "mongodb_bastion" {
   type              = "ingress"
@@ -558,17 +558,27 @@ resource "aws_security_group_rule" "mongodb_user" {
   security_group_id = data.aws_ssm_parameter.mongodb_sg_id.value
 }
 
-resource "aws_security_group_rule" "redis_vpn" {
+# resource "aws_security_group_rule" "redis_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.redis_sg_id.value
+# }
+
+resource "aws_security_group_rule" "redis_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.redis_sg_id.value
 }
-
 
 resource "aws_security_group_rule" "redis_user" {
   type              = "ingress"
@@ -592,13 +602,24 @@ resource "aws_security_group_rule" "redis_cart" {
   security_group_id = data.aws_ssm_parameter.redis_sg_id.value
 }
 
-resource "aws_security_group_rule" "mysql_vpn" {
+# resource "aws_security_group_rule" "mysql_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.mysql_sg_id.value
+# }
+
+resource "aws_security_group_rule" "mysql_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.mysql_sg_id.value
 }
@@ -614,13 +635,24 @@ resource "aws_security_group_rule" "mysql_shipping" {
   security_group_id = data.aws_ssm_parameter.mysql_sg_id.value
 }
 
-resource "aws_security_group_rule" "rabbitmq_vpn" {
+# resource "aws_security_group_rule" "rabbitmq_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
+# }
+
+resource "aws_security_group_rule" "rabbitmq_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
 }
@@ -636,17 +668,27 @@ resource "aws_security_group_rule" "rabbitmq_payment" {
   security_group_id = data.aws_ssm_parameter.rabbitmq_sg_id.value
 }
 
-resource "aws_security_group_rule" "catalogue_vpn" {
+# resource "aws_security_group_rule" "catalogue_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.catalogue_sg_id.value
+# }
+
+resource "aws_security_group_rule" "catalogue_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.catalogue_sg_id.value
 }
-
 # resource "aws_security_group_rule" "catalogue_frontend" {
 #   type              = "ingress"
 #   from_port         = 8080
@@ -693,13 +735,24 @@ resource "aws_security_group_rule" "cart_catalogue" {
   security_group_id = data.aws_ssm_parameter.cart_sg_id.value
 }
 
-resource "aws_security_group_rule" "user_vpn" {
+# resource "aws_security_group_rule" "user_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.user_sg_id.value
+# }
+
+resource "aws_security_group_rule" "user_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.user_sg_id.value
 }
@@ -715,13 +768,24 @@ resource "aws_security_group_rule" "user_backend_alb" {
   security_group_id = data.aws_ssm_parameter.user_sg_id.value
 }
 
-resource "aws_security_group_rule" "cart_vpn" {
+# resource "aws_security_group_rule" "cart_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.cart_sg_id.value
+# }
+
+resource "aws_security_group_rule" "cart_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.cart_sg_id.value
 }
@@ -737,13 +801,24 @@ resource "aws_security_group_rule" "cart_backend_alb" {
   security_group_id = data.aws_ssm_parameter.cart_sg_id.value
 }
 
-resource "aws_security_group_rule" "shipping_vpn" {
+# resource "aws_security_group_rule" "shipping_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.shipping_sg_id.value
+# }
+
+resource "aws_security_group_rule" "shipping_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.shipping_sg_id.value
 }
@@ -759,16 +834,28 @@ resource "aws_security_group_rule" "shipping_backend_alb" {
   security_group_id = data.aws_ssm_parameter.shipping_sg_id.value
 }
 
-resource "aws_security_group_rule" "payment_vpn" {
+# resource "aws_security_group_rule" "payment_vpn" {
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   #cidr_blocks       = ["0.0.0.0/0"]
+#   source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+#   # which SG you are creating this rule
+#   security_group_id = data.aws_ssm_parameter.payment_sg_id.value
+# }
+
+resource "aws_security_group_rule" "payment_bastion" {
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   #cidr_blocks       = ["0.0.0.0/0"]
-  source_security_group_id = data.aws_ssm_parameter.vpn_sg_id.value
+  source_security_group_id = data.aws_ssm_parameter.bastion_sg_id.value
   # which SG you are creating this rule
   security_group_id = data.aws_ssm_parameter.payment_sg_id.value
 }
+
 
 resource "aws_security_group_rule" "payment_backend_alb" {
   type              = "ingress"
