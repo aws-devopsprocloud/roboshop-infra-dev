@@ -17,7 +17,9 @@ data "aws_ami" "rhel-9" {
     values = ["hvm"]
   }
 }
-
+data "aws_ssm_parameter" "bastion_public_ip" {
+  name = "/${var.project}/${var.environment}/bastion_public_ip"
+}
 
 data "aws_ssm_parameter" "public_subnet_ids" {
   name = "/${var.project}/${var.environment}/public_subnet_ids"
