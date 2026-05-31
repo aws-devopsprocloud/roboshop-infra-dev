@@ -9,6 +9,9 @@ pipeline {
         ansiColor('xterm')
         timeout(time: 1, unit: 'HOURS')
     }
+    environment {
+    TF_PLUGIN_CACHE_DIR = "/opt/terraform-plugin-cache"
+    }
     // parameters {
     //     choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     // }
