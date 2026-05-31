@@ -76,3 +76,20 @@ data "aws_ssm_parameter" "payment_sg_id" {
 data "aws_ssm_parameter" "frontend_sg_id" {
   name = "/${var.project}/${var.environment}/frontend_sg_id"
 }
+
+#Get ec2 and bastion credentials
+data "aws_ssm_parameter" "ec2_user" {
+  name = "/${var.project}/${var.environment}/ec2_user"
+}
+
+data "aws_ssm_parameter" "ec2_password" {
+  name = "/${var.project}/${var.environment}/ec2_password"
+}
+
+data "aws_ssm_parameter" "bastion_user" {
+  name = "/${var.project}/${var.environment}/bastion_user"
+}
+
+data "aws_ssm_parameter" "bastion_password" {
+  name = "/${var.project}/${var.environment}/bastion_password"
+}
